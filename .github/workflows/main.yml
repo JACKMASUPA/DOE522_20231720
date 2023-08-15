@@ -23,3 +23,13 @@ jobs:
 
       - name: Build and Test
         run: npm start
+
+      - name: Deploy to Staging
+        run: |
+          # Replace with your deployment commands
+
+      - name: Send Notification on Failure
+        if: ${{ failure() }}
+        run: |
+          echo "Build or deployment failed! Sending notification..."
+          # Add code here to send a notification to your team
