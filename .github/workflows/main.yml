@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-obs:
+jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
 
@@ -49,3 +49,5 @@ obs:
               issue_number: context.issue.number,
               body: message
             });
+
+            222
