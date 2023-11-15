@@ -1,4 +1,4 @@
-name: Sample CI/CD pipeline
+name: Sample CI/CD
 
 on:
   push:
@@ -26,6 +26,26 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-         
+          # Add deployment steps here
 
-      
+  notify-on-failure:
+    needs: build-test-deploy
+    runs-on: ubuntu-latest
+    if: failure()
+
+    steps:
+      - name: Notify on Failure
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const runId = context.runId;
+            const url = `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
+            const message = "Build or deployment failed! Check the workflow run for details.\n" + url;
+            await github.issues.createComment({
+              owner,
+              repo,
+              issue_number: context.issue.number,
+              body: message
+            });
