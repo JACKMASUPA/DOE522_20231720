@@ -24,6 +24,9 @@ jobs:
       - name: Build and Test
         run: npm start
 
+      - name: Intentional Failure Step
+        run: non_existent_command  # This command intentionally fails
+
       - name: Deploy to Staging
         run: |
           # Add deployment steps here
