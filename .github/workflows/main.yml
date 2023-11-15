@@ -1,4 +1,4 @@
-name: Sample CI/CD
+name: Sample CI/CD pipeline
 
 on:
   push:
@@ -28,8 +28,4 @@ jobs:
         run: |
          
 
-      - name: Send Notification on Failure
-        if: ${{ failure() }}
-        run: |
-          echo "Build or deployment failed! Sending notification..."
-          # Add code here to send a notification to your team
+      
