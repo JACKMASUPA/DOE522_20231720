@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '24'
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install
@@ -42,12 +42,13 @@ jobs:
             const { owner, repo } = context.repo;
             const runId = context.runId;
             const url = `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
-            const message = "Build or deployment failed! Check the workflow run for details.\n" + url;
-            await github.issues.createComment({
+            const title = "Build or deployment failure";
+            const body = `The workflow run failed. Check the details [here](${url}).`;
+            const newIssue = await github.issues.create({
               owner,
               repo,
-              issue_number: context.issue.number,
-              body: message
+              title,
+              body,
+              assignees: [owner] // You can modify this to assign it to specific users
             });
-
-          
+            console.log(`New issue created: ${newIssue.data.html_url}`);
